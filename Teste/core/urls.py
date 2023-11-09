@@ -4,5 +4,6 @@ from . import views
 app_name = 'core'
 
 urlpatterns = [
-    path('', views.Index, name="Index"),
+    path('', views.index, name='index'),
+    path('create_aluno/', views.create_aluno, name='create_aluno')
 ]

@@ -73,3 +73,11 @@ def update(request, id):
         'cidades': cidades
     }
     return render(request, 'core/update.html', context)
+
+def delete(request, id):
+    if request.method == 'POST':
+        aluno = Aluno.objects.get(id = id)
+        aluno.delete()
+
+    return redirect('core:index')
+

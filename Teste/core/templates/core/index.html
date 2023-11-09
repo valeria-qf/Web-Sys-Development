@@ -14,8 +14,14 @@
     </a>
     <ul>
         {% for aluno in alunos %}
-            <li> {{aluno.id}} - {{aluno.nome_aluno}} - {{aluno.data_nascimento}} - {{aluno.cidade}} - {{aluno.curso}} - <form action="{% url "core:update" aluno.id %}" method="GET">
+            <li> {{aluno.nome_aluno}} - {{aluno.data_nascimento}} - {{aluno.cidade}} - {{aluno.curso}} - 
+                <form action="{% url "core:update" aluno.id %}" method="GET">
                 <button type="submit">Editar</button>
+            </form>
+
+            <form action="{% url "core:delete" aluno.id %}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');">
+                {% csrf_token %}
+                <button type="submit">Excluir</button>
             </form></li>
         {% endfor %}
     </ul>

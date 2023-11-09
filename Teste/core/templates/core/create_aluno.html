@@ -12,6 +12,7 @@
     <div class="container mt-5">
 
         <h1 class="display-4 mb-4">Controle de Alunos - IFRN</h1>
+        <h2 class="h4 mb-4">Cadastrar novo aluno</h2>
 
         <form action="{% url "core:create_aluno" %}" method="POST" class="mb-4">
             {% csrf_token %}

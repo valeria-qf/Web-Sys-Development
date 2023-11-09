@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Alunos - IFRN</title>
+</head>
+<body>
+    <h1>Controle de Alunos - IFRN</h1>
+    <ul>
+        {% for aluno in alunos %}
+            <li>{{aluno.nome_aluno}} - {{aluno.cidade}} - {{aluno.curso}} </li>
+        {% endfor %}
+    </ul>
+
+    <form action="">
+        <input type="text" name = "nome_aluno" placeholder = "nome">
+
+        <input type="date" name = "data_nascimento" placeholder = "data de nascimento">
+
+        <input type="text" name = "endereco" placeholder = "endereço">
+
+        <input type="email" name = "email" placeholder = "email">
+
+        <select name="cidade" id="cidade">
+            {% for cidade in cidades %}
+                <option value="options">
+                    {{cidade.nome_cidade}}
+                </option>
+            {% endfor %}
+        </select>
+
+        <select name="curso" id="curso">
+            {% for curso in cursos %}
+                <option value="options">
+                    {{curso.nome_curso}}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+</body>
+</html>

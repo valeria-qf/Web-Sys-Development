@@ -14,7 +14,7 @@
     </a>
     <ul>
         {% for aluno in alunos %}
-            <li> {{aluno.nome_aluno}} - {{aluno.data_nascimento}} - {{aluno.cidade}} - {{aluno.curso}} - 
+            <li> <a href="{% url "core:detail" aluno.id %}">{{aluno.nome_aluno}}</a> - {{aluno.data_nascimento}} - {{aluno.cidade}} - {{aluno.curso}} - 
                 <form action="{% url "core:update" aluno.id %}" method="GET">
                 <button type="submit">Editar</button>
             </form>

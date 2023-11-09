@@ -81,3 +81,7 @@ def delete(request, id):
 
     return redirect('core:index')
 
+def detail(request, id):
+    aluno = Aluno.objects.get(id = id)
+
+    return render(request, 'core/detail.html', {'aluno':aluno})

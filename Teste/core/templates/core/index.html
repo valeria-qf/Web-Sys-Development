@@ -38,14 +38,13 @@
                         <td>{{aluno.curso}}</td>
                         <td>
                             <div class="d-flex"> 
-                                <form action="{% url "core:update" aluno.id %}" method="GET">
+                                <a href="{% url "core:update" aluno.id %}">
                                     <button type="submit" class="btn btn-warning me-2">Editar</button>
-                                </form>
+                                </a>
 
-                                <form action="{% url "core:delete" aluno.id %}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este aluno?');">
-                                    {% csrf_token %}
+                                <a href="{% url "core:delete" aluno.id %}">
                                     <button type="submit" class="btn btn-danger">Excluir</button>
-                                </form>
+                                </a>
                             </div>
                         </td>
                     </tr>

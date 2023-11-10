@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from .models import Aluno, Curso, Cidade
+from .forms import AlunoForm
 
 def index(request):
     alunos = Aluno.objects.all()
     cidades = Cidade.objects.all()
     cursos = Curso.objects.all()
+    
     context = {
         'alunos': alunos,
         'cidades': cidades,
@@ -15,69 +17,43 @@ def index(request):
 
 def create_aluno(request):
     if request.method == 'POST':
-        nome = request.POST.get('nome_aluno')
-        endereco = request.POST.get('endereco')
-        email = request.POST.get('email')
-        data_nascimento = request.POST.get('data_nascimento')
-        curso_id = request.POST.get('curso')
-        cidade_id = request.POST.get('cidade')
+        form = AlunoForm(request.POST)
+        if form.is_valid():
+            form.save()
 
-        curso = Curso.objects.get(pk=curso_id)
-        cidade = Cidade.objects.get(pk=cidade_id)
-
-        Aluno.objects.create(
-            nome_aluno=nome,
-            endereco=endereco,
-            email=email,
-            data_nascimento=data_nascimento,
-            curso=curso,
-            cidade=cidade
-        )
-        return redirect('core:index')
+        return redirect('core:index')  
     
-    cursos = Curso.objects.all()
-    cidades = Cidade.objects.all()
-    context = {
-        'cursos': cursos,
-        'cidades': cidades,
-    }
-    return render(request, 'core/create_aluno.html', context)
+    else:
+        form = AlunoForm()
+
+    return render(request, 'core/create_aluno.html', {'form': form})
 
 def update(request, id):
+
+    aluno = Aluno.objects.get(id=id)
+
     if request.method == 'POST':
-        nome = request.POST.get('nome_aluno')
-        endereco = request.POST.get('endereco')
-        email = request.POST.get('email')
-        data_nascimento = request.POST.get('data_nascimento')
-        curso_id = request.POST.get('curso')
-        cidade_id = request.POST.get('cidade')
+        form = AlunoForm(request.POST, instance=aluno)
+        if form.is_valid():
+            form.save()
 
-        aluno = Aluno.objects.get(id = id)
-        aluno.nome_aluno = nome
-        aluno.endereco = endereco
-        aluno.email = email
-        aluno.data_nascimento = data_nascimento
-        aluno.curso_id = curso_id
-        aluno.cidade_id = cidade_id
-        aluno.save()   
+            return redirect('core:index')
 
-        return redirect('core:index')
+    else:
+        cursos = Curso.objects.all()
+        cidades = Cidade.objects.all()
 
-    aluno = Aluno.objects.get(id = id)
-    cursos = Curso.objects.all()
-    cidades = Cidade.objects.all()
+        context = {
+            'aluno': aluno,
+            'cursos': cursos,
+            'cidades': cidades
+        }
 
-    context = {
-        'aluno': aluno,
-        'cursos': cursos,
-        'cidades': cidades
-    }
-    return render(request, 'core/update.html', context)
+        return render(request, 'core/update.html', context)
 
 def delete(request, id):
-    if request.method == 'POST':
-        aluno = Aluno.objects.get(id = id)
-        aluno.delete()
+    aluno = Aluno.objects.get(id = id)
+    aluno.delete()
 
     return redirect('core:index')
 

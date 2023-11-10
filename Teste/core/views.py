@@ -25,8 +25,16 @@ def create_aluno(request):
     
     else:
         form = AlunoForm()
+        cursos = Curso.objects.all()
+        cidades = Cidade.objects.all()
 
-    return render(request, 'core/create_aluno.html', {'form': form})
+        context = {
+            'form': form,
+            'cursos': cursos,
+            'cidades': cidades
+        }
+
+    return render(request, 'core/create_aluno.html', context)
 
 def update(request, id):
 

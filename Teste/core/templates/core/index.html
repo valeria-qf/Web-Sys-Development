@@ -13,9 +13,9 @@
 
         <h1 class="display-4 mb-4">Controle de Alunos - IFRN</h1>
 
-        <form action="{% url "core:create_aluno" %}" method="GET">
+        <a href="{% url "core:create_aluno" %}">
             <button type="submit" class="btn btn-primary mb-3">+ Novo Aluno</button>
-        </form>
+        </a>
 
         <table class="table">
             <thead>

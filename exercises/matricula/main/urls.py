@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from aluno import views as views_aluno
-from curso import views as  views_curso
+from curso import views as views_curso
+from cidade import views as views_cidade
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,11 +27,15 @@ urlpatterns = [
     path('criar-aluno/', views_aluno.criar_aluno, name= 'criar_aluno'),
     path('editar-aluno/<int:id>/', views_aluno.editar_aluno, name = 'editar_aluno'),
     path('excluir-aluno/<int:id>/', views_aluno.excluir_aluno, name = 'excluir_aluno'),
+
     path('listar-cursos', views_curso.ver_cursos, name = 'ver_cursos' ),
     path('criar-curso', views_curso.criar_curso, name = 'criar_curso'),
     path('editar-curso/<int:id>', views_curso.editar_curso, name = 'editar_curso'),
     path('excluir-curso/<int:id>', views_curso.excluir_curso, name = 'excluir_curso'),
+
+    path('listar-cidades/', views_cidade.ver_cidades, name = 'ver_cidades'),
+    path('criar-cidade/', views_cidade.criar_cidade, name = 'criar_cidade'),
+    path('editar-cidade/<int:id>', views_cidade.editar_cidade, name = 'editar_cidade'),
+    path('excluir-cidade/<int:id>', views_cidade.excluir_cidade, name = 'excluir_cidade'),
 ]
-
-
 

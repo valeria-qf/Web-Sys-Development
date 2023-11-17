@@ -20,7 +20,6 @@ def create_aluno(request):
         form = AlunoForm(request.POST)
         if form.is_valid():
             form.save()
-
         return redirect('core:index')  
     
     else:

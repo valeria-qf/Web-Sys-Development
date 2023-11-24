@@ -16,16 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from hospedagem.views import listar_hospedagens, index, criar_hospedagem, editar_hospedagem, excluir_hospedagem, detalhar_hospedagem
+from hospedagem.views import ListarHospedagens , Index, CriarHospedagem, EditarHospedagem, ExcluirHospedagem, DetalharHospedagem
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
-    path('hospedagens/', listar_hospedagens, name = "listar_hospedagens"),
-    path('hospedagens/criar', criar_hospedagem, name = "criar_hospedagem"),
-    path('hospedagens/editar/<int:id>', editar_hospedagem, name = "editar_hospedagem"),
-    path('hospedagens/excluir/<int:id>', excluir_hospedagem, name = "excluir_hospedagem"),
-    path('hospedagens/detalhar/<int:id>', detalhar_hospedagem, name = "detalhar_hospedagem"),
+    path('', Index.as_view() , name='index'),
+    path('hospedagens/', ListarHospedagens.as_view(), name = "listar_hospedagens"),
+    path('hospedagens/criar', CriarHospedagem.as_view(), name = "criar_hospedagem"),
+    path('hospedagens/editar/<int:id>', EditarHospedagem.as_view(), name = "editar_hospedagem"),
+    path('hospedagens/excluir/<int:id>', ExcluirHospedagem.as_view(), name = "excluir_hospedagem"),
+    path('hospedagens/detalhar/<int:id>', DetalharHospedagem.as_view() , name = "detalhar_hospedagem"),
 ]
 
 

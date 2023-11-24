@@ -1,50 +1,47 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Hospedagem, Cliente, Consumo, Quarto 
+from .models import Hospedagem
+from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView, DetailView
+
+from django.urls import reverse_lazy
 from .forms import HospedagemForm
 
-def index(request):
-    # total_hospedagens = Hospedagem.objects.count()
-    # # total_cidades = Cidade.objects.count()
-    # # total_curso = Curso.objects.count()
-    # context = {
-    #     'total_alunos' : total_alunos,
-    #     'total_cidades' : total_cidades,
-    #     'total_cursos' : total_curso
+class Index(TemplateView):
+    template_name = 'hospedagem/index.html'
+    # def get_context_data(self, **kwargs):
+        # context = super().get_context_data(**kwargs)
+        # context['total_alunos'] = Aluno.objects.count()
+        # context['total_cidades'] = Cidade.objects.count()
+        # context['total_cursos'] = Curso.objects.count()
+        # return context
+
+class ListarHospedagens(ListView):
+    model = Hospedagem
+    template_name = 'hospedagem/hospedagem.html'
+    context_object_name = 'hospedagens'
     
-    return render(request, "hospedagem/index.html")
+class CriarHospedagem(CreateView):
+    template_name = 'hospedagem/form_hospedagem.html'
+    form_class = HospedagemForm
+    success_url = reverse_lazy('listar_hospedagens')
+   
+class EditarHospedagem(UpdateView):
+    model = Hospedagem
+    template_name = 'hospedagem/form_hospedagem.html'
+    form_class = HospedagemForm
+    pk_url_kwarg = 'id' # Nome da variavel na URL
 
+    def get_success_url(self):
+        return reverse_lazy('listar_hospedagens')
 
-def listar_hospedagens(request):
-    hospedagens = Hospedagem.objects.all()
-    return render(request, 'hospedagem/hospedagem.html', {'hospedagens' : hospedagens})
+class ExcluirHospedagem(DeleteView):
+    model = Hospedagem
+    success_url = reverse_lazy('listar_hospedagens')
+    pk_url_kwarg = 'id'
 
-def criar_hospedagem(request):
-    if request.method == 'POST':
-        form = HospedagemForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('listar_hospedagens')
-    else:
-        form = HospedagemForm()
-        return render(request, 'hospedagem/form_hospedagem.html', {'form' : form})
-    
-def editar_hospedagem(request, id):
-    hospedagem = get_object_or_404(Hospedagem, id = id)
-    if request.method == 'POST':
-        form = HospedagemForm(request.POST, instance= hospedagem)
-        if form.is_valid():
-            form.save()
-            return redirect('listar_hospedagens')
-    else:
-        form = HospedagemForm(instance= hospedagem)
-        return render(request, 'hospedagem/form_hospedagem.html', {'form' : form})
+    def get(self, *args, **kwargs):
+        return self.delete(*args, **kwargs)
 
-def excluir_hospedagem(request, id):
-    hospedagem = get_object_or_404(Hospedagem, id = id)
-    hospedagem.delete()
-    return redirect('listar_hospedagens')
-
-def detalhar_hospedagem(request, id):
-    hospedagem = get_object_or_404(Hospedagem, id = id)
-    return render(request, 'hospedagem/detalhar.html', {'hospedagem' : hospedagem})
+class DetalharHospedagem(DetailView):
+    model = Hospedagem
+    template_name = 'hospedagem/detalhar.html'
+    pk_url_kwarg = 'id'
 
